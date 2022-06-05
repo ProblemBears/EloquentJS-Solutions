@@ -1,3 +1,4 @@
+//Testing Github commit detection after email change
 function deepEqual(a, b) {
 if (a === b) return true;
 
