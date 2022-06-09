@@ -36,3 +36,46 @@ function buildGraph(edges)
 }
 
 const roadGraph = buildGraph(roads);
+
+
+
+/*THE TASK: We don't use OOP for each thing. Instead we define a changeable STATE */
+class VillageState
+{
+    constructor(place, parcels)
+    {
+        this.place = place;
+        this.parcels = parcels;
+    }
+
+    move(destination)
+    {
+        //If not a valid move: return old state
+        if(!roadGraph[this.place].includes(destination))
+            return this;
+        //Otherwise change the place property to the new destination:
+        else
+        {
+            //map() takes care of moving parcels, and filter() does the delivering(removed from undelivered parcels)
+            let parcels = this.parcels.map
+            (
+                p => 
+                {
+                    if(p.place != this.place) return p;
+                    return {place: destination, address: p.address};
+                }
+            ).filter(p => p.pace != p.address);
+            return new VillageState(destination, parcels);
+        }
+    }
+}
+
+let first = new VillageState("Post Office", [{place: "Post Office", address: "Alice's House"}]);
+let next = first.move("Alice's House");
+
+console.log(next.place);
+// → Alice's House
+console.log(next.parcels);
+// → []
+console.log(first.place);
+// → Post Office
