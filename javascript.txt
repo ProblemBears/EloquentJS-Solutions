@@ -1,0 +1,155 @@
+Functions (3 ways to make):
+	- let someVar = function(params){}
+	- let someVar = (params) => {} - If one parameter, then don't need paranthesis. If one statement, no return keyword and braces.
+	- function someVar(params){} - Can be placed anywhere unlike the other two which have to preceed usecase
+
+String Methods:
+ 	-.length
+	-.toUpperCase
+	-.toLowerCase
+	-.slice(e1, e2) & indexOf(e): read below
+	-.trim(): removes whitespace from the start/end of strings (spaces, newlines, tabs)
+	-.padStart(i, c): i is the desired padding length; c is the character to be padded
+	-.split(s) & .join(a): make an array based on the cutting string s; rejoin the array to a string w/a joining each string
+	-.repeat(i): repeat the string i times
+	-.includes(val): true/false if val is included in the array
+	- Code Units: 16 bit numbers (Strings are encoded as a sequence of code units)
+	- UTF-16: uses ONE CODE UNIT for the most common characters and TWO UNITS for others
+	 	*This causes problems when one thing uses only one unit and another uses two. BUT TWO IS BECOMING MORE COMMON NOW WITH EMOJIS
+		*OperaTIONS LIKE .length and [] DEAL ONLY WITH 1 CODE UNITS
+		*someString.charCodeAt(index) - gives you a code unit not a full character code
+		*someString.codePointAt(index) - does give a full unicode character (BUT THE INDEX STILL SPEAKS IN CODE UNITS SO WE HAVE TO DEAL WITH IT)
+		*for(let char of someString) DEALS WITH THE INDEX PROBLEM - it iterates over characters not code units
+
+Array Methods: 
+	-.push(arg)
+	-.pop()
+	-.includes(arg): check whether arg exists in the array
+	-For loops in Modern JS can also be done with:	for(let someVar of someArray){}
+	-.shift(): removes from the start of the array | \
+	-.unshift(e): adds to the start of the array   | - Pairing these two w/ push/pop can be used to implement a queue
+	-.indexOf(e): returns the index of the value e or -1 if not found
+	-.lastIndexOf(e): same as indexOf(e) but searches from the back of the array first to the start (2nd arg for both to define start)
+	-.slice(inclusiveIndex, exclusiveIndex) - It returns a subarray between these parameter
+	-.concat(someArray): Concatanates two arrays
+	FOR NEXT FOUR SEE HIGH ORDER FUNCTIONS:
+		-.filter(f)
+		-.map(f)
+		-.reduce(f)
+		-.foreach(e => {//Do something w/ e possibly}
+		-.some(e => return true/false) // Like || for arrays
+		-.every(e => return true/false) // Like && for arrays
+
+Rest Parameters: (...) operator HAS TWO USES - 
+	1) To define a rest parameter:
+		function max(...numbers)
+		{
+		   for(let i of numbers){} //Notice that ...numbers is an array. That's because arguments at this paramater are put to an array
+		}
+	2) To spread:
+		-Spreading in an argument (here we spread at our Rest Paramter):
+			let numbers = [5,1,7];
+			console.log(max(...numbers)); // spreads the elements of the array to act as arguments
+		-Spreading in an array:
+			["will", ...numbers, "understand"] //Puts elements of the array into this array
+
+Math Object:
+	-max, min, sqrt, cos, sin, tan, PI, floor, random, round, abs
+
+Destructuring: Sometimes it's neater to have bindings for elements or objects
+	-For Arrays - wrap an array binding with []'s and put names for each element:
+		*Instead of function phi(table) | we do | function phi([n00, n01, n10, n11])
+		 so instead of having to use table[i] we simply use the names n00, n11, etc...
+	-For Objects - wrap a binding with {} and define names:
+		*let name  = {name: "Faraji", age: 23};
+		 console.log(name) //Faraji is output
+	
+JSON:
+	-Serializing data means converting it to a flat description
+	-JSON notation is very similar to JS. Except for:
+		1) All property names have to be surrounded by double quotes
+		2) Only simple data expressions are allowed - no function calls, bindings, or anything that involves computation
+		3) Comments are not allowed
+	-Javascript gives us the functions:
+		-JSON.stringify(e): serialize data such as an object
+		-JSON.parse(s): convert a JSON string back into data
+
+HIGH ORDER FUNCTION:
+	-Are functions with 1)Functions as arguments OR 2)Return a function
+	-someArray.filter(e => e.someProp == "someValue") - 				This should return a new array that was filtered by the old one based on func
+	-someArray.map(e => s.name) - 							Transforms an array by applying a function to all elements; building new Array from each return.
+	-someArray.reduce( (curr, incrementer) => curr + incrementer, someStart)	Compute a single value from every element in the array (eg. sum())
+											*reduce array method doesn't need someStart if there's atleast 1 element in the array (start by default)
+
+PROTOTYPES: Fallback (like inheritance)
+	-Object.prototype, Array.prototype, Function.prototype		//Types of prototypes
+	-Object.getPrototypeOf(someArrObjOrFunc)			//Gets the protoype of a value
+	-let rabbit = Object.create(protoRabbit)		//Assigns a protoype to instance...If null no protoype
+	-someObject.hasOwnProperty(propertyName)	//Safeguards against accessing prototype properties
+	
+CLASSES:
+	-class Rabbit{ constructor(someParam){} \n someMethod(){} \n someMethod()...}	Methods get packed into constructor
+	-let killeRabbit = new Rabbit(someArg); //example of constructing a new instance of Rabbit class
+
+JS COMES WITH A CLASS called MAP:
+	-let map = new Map();	To initialize
+	-map.set(key, val);
+	-map.get(key);
+	-map.has(key);
+	-JS ALSO HAS A CLASS CALLED : Set
+
+POLYMORPHISM: When a piece of code is written to work w/ objects that have a certain interface
+	-PREREQ: learn about Symbols (unique strings for properties)
+
+SYMBOLS:
+	-let sym = Symbol("name"); //To create a symbol
+	-Rabbit.prototype[sym] = someVal; //Example of use
+
+ITERATOR INTERFACE:
+	-Iterators have: next(), value, done()
+	-Ex: let okIterator = "OK"[Symbol.iterator](); //Symbol.iterator provided by JS
+	-We defined a Matrix and MatrixIterator class: //the Iterator has a constructor and next() that returns an object w/ value & done properties
+		*Put in Matrix w/: Matrix.prototype[Symbol.iterator] = function() {return new MatrixIterator(this)};
+		*We can now loop w/ for/of: for(let {x,y,value})
+
+GETTERS/SETTERS/STATICS:
+	-write get or set before a method name to take away the need for parenthesis:
+		*DO: class Temperature{get fahrenheit() set fahrenheight}
+		*TO BE ABLE TO: temp.farhenheit or temp.fahrenheit = 55;
+	-write static before a method name to pack it in to the constructor instead of the prototype property.
+		*TO BE ABLE TO: Temperature.staticMethod() call through the clas name 
+
+INHERITANCE:
+	*class SymmetricMatrix extends Matrix // This class shouldn't be based on default Object prototype, but this super class
+	* call super(parentParameters) to initialize parents properties
+	* someClass instanceof someClass // to chceck if left operand is a child of the right operand
+
+TO MAKE OBJECTS PERSISTENT/IMMUTABLE:
+	-Object.freeze(someObject) - So if you try to change values of properties, then they wouldn't change
+
+MODULES:
+	-Improvised Modules of the past:
+		*Bind the module to a function
+		* eval() or Function constructor: which accept paramter list in paramter 1, and the body in param 2
+
+	-CommonJS Modules (Node.js uses this, and many packages in NPM do to):
+		*require(someDependencyName) - makes sure the module is loaded and returns is interface
+			**The loader WRAPS module code in a function - giving it its local scope (safety from JS global scope)
+			**Modules put their interfaces in an object bound to export. EX:
+				exports.formatDate = function(params){return;};
+		*module.exports can be overwitten to be any value. Like a single value or function instead of an object.
+		*The string that require() uses can be a:
+			** Relative Path: './somePath'
+			** Not Relative: Then Node.js will look for an installed package by that name
+
+	-ECMAScript Modules:
+		*Concept of dependencies and interfaces stay the same. Differences are:
+			**Notation is integrated into the language:	
+				***Importing:		import varName "moduleName"
+				***Exporting:		export function formatDate(paramas){}
+			**ES modules don't export a single value. It's a set of named bindings
+			**To specify a main export binding:	export default someBinding();
+			**Change imported binding name:		import {days as dayNames} from "date-names";
+		*Import declarations CAN NOT APPEAR IN BLOCKS. They need to be evaulated before scripts. (Dependencies must be in quotes also then)	
+	-One single big file is faster than multiple. So use BUNDLERS.
+	-MINIFIERS can be used to make code more compact for speedy transfer over networks		
