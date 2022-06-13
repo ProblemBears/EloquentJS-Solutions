@@ -153,3 +153,21 @@ MODULES:
 		*Import declarations CAN NOT APPEAR IN BLOCKS. They need to be evaulated before scripts. (Dependencies must be in quotes also then)	
 	-One single big file is faster than multiple. So use BUNDLERS.
 	-MINIFIERS can be used to make code more compact for speedy transfer over networks		
+
+ASYNCHRONOUS PROGRAMMING:
+	-1)APPROACH: CALLBACKS - make functions that perform a slow action take an extra argument, a callback function.
+		*Ex: setTimeout() which is available in browsers and Node.js: waits a number of millisecs and then calls a func.
+	
+	-2)APPROACH: PROMISES - Abstract concepts like aynchronicity can be better represented as values. So instead of arranging
+				a callback to be recalled in the future. RETURN AN OBJECT THAT REPRESENTS THIS FUTURE EVENT.
+		*Promise class - an asynchronus action that may complete at some point and produce a value. It's able to notify
+				 anyone who is interested when it value is available.
+			**Promise.resolve-		The easiest way to create a a promises. This function ensures that the value
+							you give is wrapped in a promise.
+			**somePromise.then(()=>{});-	***To get the result of a promise, use its then(callback(s) method.
+							***Returns another promise, which resolves to the value that the 
+							   handler function returns OR if that returns a promise, waits and then
+							   resolves to its result
+		*Think of promises as a device to move values into an asynchronous reality. A normal value is simply there.
+		 A promised value is a value that might already be there or might appear at some time in the future. Computations
+		 defined in terms of promises are execute as the values become available
