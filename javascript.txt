@@ -171,4 +171,28 @@ ASYNCHRONOUS PROGRAMMING:
 		*Think of promises as a device to move values into an asynchronous reality. A normal value is simply there.
 		 A promised value is a value that might already be there or might appear at some time in the future. Computations
 		 defined in terms of promises are execute as the values become available
-BREAK
+
+	-3)APPROACH: ASYNC FUNCTIONS - Javascript allows you to write pseudo-synchronous code to describe asynchronous computation. An
+					async function is a function that implicitly returns a promise and that can, in its body, await
+					other promises in a way that looks synchronous.
+		*Notations:
+			**When an asyc method or function are called they RETURN A PROMISE. So as soon as its body returns the promise is resolved or if an excetion is thrown
+			  the promise is rejected
+			**Functions:	async function someStorage(){}
+			**Methods:	async methodName(){}
+
+		*Inside of an async function AWAIT can be put infront of an expression to wait for a promise to resolve AND ONLY THEN can the function continue to execute.
+
+		*Easier to use than raw Promises. But can be mixed with them.
+
+		*The event loop is what runs the callbacks of async functions. Therefore yielding responses later even if they resolve immidiately
+GENERATORS:
+	-Another JS function that pauses and resumer (similar to async but without the promises)
+	-Generators return an iterator, so it's easier to create iterators with them (as opposed to creating an iterator object like before):
+		*EX:	Group.prototype[Symbol.iterator] = function*() {
+  								for (let i = 0; i < this.members.length; i++) {
+    									yield this.members[i];
+  								}
+							    };
+	-NOTATION:	A * infront of function = RETURNS AN ITERATOR
+	-yield functions can only exist in a generator. AND IT SAVES IT LOCAL STATE! THIS IS WHY ASYNC IS A TYPE OF GENERATOR BUT W/ PROMISES
