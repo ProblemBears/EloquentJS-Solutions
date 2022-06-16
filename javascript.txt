@@ -244,6 +244,7 @@ THE DOM:
 							**for hypenated styles like font-family we can use camelcase like so style.fontFamily
 					*querySelectorAll("someSelectorString") - take CSS selectors and returns an array of elements that match it
 					*querySelector - same as above but for the first instance
+
 	-Empty Text Nodes get created by HTML whitespace!!!!
 	-HTML allows you to use made up attributes. So use getAttribute and setAttribute to work with those.
 		*convention dictates our made up attribute names start with the previc data-
