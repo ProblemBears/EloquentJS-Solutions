@@ -524,3 +524,46 @@ HTTP AND FORMS:
 				** .getItem(key): returns the value or if nothing, null
 				** .removeItem(key)
 		-A similar object is session storage except everything is forgotten after the session in this case
+
+Node.js:
+	-Node.js is a program you install that allows you to use JS outside of the browser.
+	-All standard JS global bindings such as JSON, Array, Math are present in Node.js
+	-Node.js has a global binding:	(process) which provides many ways to inspect and manipulate the current program
+		*process methods:
+			** .exit(errorCode): 	0 means exited succesfully.
+			** .argv: 		an array of strings of the arguments given from command line (this includes node command and path, so [2] is the start of args)
+	-Node.js uses CommonJS, where properties are exposed by putting them to exports object
+	-Command Line commands:
+		$ node
+			*Opens a sandbox where you can write JS (kind of like Python's IDLE)
+		$ node someFile.js
+			*executes the given file
+		$ node reverseString.js someString
+			*We add an arg that can be read by this file using process.arg[v];
+
+	-You can install modules from a repo of modules using:		$npm install someModule
+		*This will create a directory called node_modules where a someModule directory will reside (you can open it and look at the code)
+
+	-package.json should exist for each project. It contains info about the project such as its name, version, and dependencies.
+		* npm install will install the dependencies listed in package.json if they aren't already installed. Also it adds new packages to the list of dependencies automatically.
+	
+	-Node.js Built-in modules
+		--File System Module - require("fs") (but there is also a version using promises by appending .promises at the end of the require):
+
+			*readFile(pathStr, charEncodeStr, (error, text)=>{});		-	**reads a file then calls a callback with the files contents.
+												**if no charEncodeStr provided, then defaults to binary data (a Buffer object)
+
+			*writeFile(pathStr, toBeWrittenStr, err => {};			-	**used to write a file to disk
+												**encodes a string to UTF8 by default
+
+		--HTTP Module - require("http") - provides functionality for running HTTP servers and making HTTP requests:
+			*let server = createServer( (req, res) => {}); server.listen(somePort);		**to create a server
+			*let requestStream = request( {//reqObj}, res=> {} ); requestStream.end();	**to create a client
+			*MAking request like this is wack. Use modules downloaded from NPM
+	-STREAMS:
+		-Certain objects are streams (like the http server and client)
+		-To write to a stream we can simply call .write() on that onject.
+		-To read we actually have to use event handlers. Objects that emit events in Node have a method called on() that is similar to addEventListener, in that you 
+		 give it an event name and then a function to call when the event occurs
+			*Event names:	** "data"	***fired every time data comes in
+					** "end"	***fired whenever the stream is at its end	
